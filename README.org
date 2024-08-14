@@ -1,0 +1,45 @@
+* Usage
+
+The application logs a message every second, which includes the
+current value of the =ENVIRONMENT= environment variable.
+
+* Building the application
+** With zig
+
+#+begin_src bash :results output
+zig build
+#+end_src
+
+#+RESULTS:
+
+The binary is generated in =./zig-out/bin/=.
+
+** With nix
+
+#+begin_src bash :results output
+nix build
+#+end_src
+
+#+RESULTS:
+
+The binary is generated in =./result/bin/=.
+
+* Building the container image
+
+#+begin_src bash :results output
+nix build .#docker-image
+#+end_src
+
+#+RESULTS:
+
+The image is generated in =./result=. You can load it with:
+
+#+begin_src bash :results output
+docker load < result
+#+end_src
+
+Then you can run the image:
+
+#+begin_src bash :results output
+docker run --rm -t logstream:latest
+#+end_src
