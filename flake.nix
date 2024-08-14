@@ -50,6 +50,21 @@
             EntryPoint = ["${logstream}/bin/logstream"];
           };
         };
+        push-image = pkgs.writeShellApplication {
+          name = "push-image";
+          runtimeInputs = with pkgs; [skopeo];
+          text = ''
+            if [ -z "$GH_PAT_TOKEN" ]; then
+              echo 'Error: GH_PAT_TOKEN environment variable not set'
+              exit 1
+            fi
+
+            skopeo copy docker-archive:${docker-image} \
+                   docker://ghcr.io/origoss/logstream:latest \
+                   --insecure-policy \
+                   --dest-creds "origoss:''${GH_PAT_TOKEN}"
+          '';
+        };
         pre-commit-checks = pre-commit-hooks.lib.${system}.run {
           src = ./.;
           hooks = {
@@ -78,6 +93,8 @@
             ${pre-commit-checks.shellHook}
           '';
           packages = with pkgs; [
+            push-image
+            skopeo
             zig
           ];
         };

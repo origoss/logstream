@@ -51,3 +51,15 @@ Then you can run the image:
 #+begin_src bash :results output
 docker run --rm -t logstream:latest
 #+end_src
+
+** Pushing the image
+
+You can push the image using the =push-image= script. But first, you
+have to define the =GH_PAT_TOKEN= environment variable. It shall
+contain a valid GitHub Personal Access token with =write:packages= and
+=read:packages= scopes.
+
+#+begin_src bash :results output
+export GH_PAT_TOKEN="ghp_dMlj4..."
+push-image
+#+end_src

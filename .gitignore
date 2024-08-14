@@ -4,3 +4,4 @@
 /.zig-cache/
 /result
 /zig-out/
+/pat-token
