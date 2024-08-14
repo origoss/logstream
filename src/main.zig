@@ -1,6 +1,18 @@
 const std = @import("std");
 
+fn abort(_: i32) callconv(.C) void {
+    std.log.warn("aborting", .{});
+    std.posix.abort();
+}
+
 pub fn main() !void {
+    try std.posix.sigaction(std.posix.SIG.INT, &.{
+        .handler = .{
+            .handler = abort,
+        },
+        .mask = std.posix.empty_sigset,
+        .flags = 0,
+    }, null);
     var i: u64 = 0;
     var env: [:0]const u8 = "undefined";
     if (std.posix.getenv("ENVIRONMENT")) |envValue| {
