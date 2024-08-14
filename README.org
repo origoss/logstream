@@ -3,6 +3,14 @@
 The application logs a message every second, which includes the
 current value of the =ENVIRONMENT= environment variable.
 
+* Run the application
+
+You can download, build and run the application with the following command:
+
+#+begin_src bash :results output
+nix run github:origoss/logstream
+#+end_src
+
 * Building the application
 ** With zig
 
